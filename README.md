@@ -1,1 +1,1 @@
-# PricePrompt
+# Blog made with python

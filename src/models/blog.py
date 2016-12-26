@@ -6,11 +6,12 @@ from src.models.post import Post
 
 class Blog:
 
-    def __init__(self, author, title, description, _id=None):
+    def __init__(self, author, title, description, author_id, _id=None):
 
         self.author = author
         self.title = title
         self.description = description
+        self.author_id = author_id
         self._id = uuid.uuid4().hex if _id is None else _id
 
 
@@ -37,6 +38,7 @@ class Blog:
             "author":self.author,
             "title":self.title,
             "description":self.description,
+            "author_id":self.author_id,
             "_id":self._id
         }
 
@@ -47,4 +49,7 @@ class Blog:
                     description=blog_data['description'],
                     id=blog_data['_id'])
 
-
+    @classmethod
+    def find_by_author(cls,author_id):
+        blogs = Database.find("blogs",({"author_id":author_id}))
+        return [cls(**blog) for blog in blogs]
